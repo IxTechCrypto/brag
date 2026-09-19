@@ -45,7 +45,7 @@ landing-page-only, write "none — landing-page only" and rely on Key moments in
 - Creative direction: [freeform phrase, inferred or user-provided]
 - Interpretation: [one sentence on how this affects pacing, writing, visual energy, and restraint]
 
-## Format: [landscape / vertical / square] — [width]x[height]
+## Format: [landscape (1920x1080) / vertical (1080x1920) / square (1080x1080)]
 ## Duration: [target seconds]
 
 ## Visual identity (from the project)

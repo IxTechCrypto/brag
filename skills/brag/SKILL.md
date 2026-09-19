@@ -22,7 +22,7 @@ to the normal no-voice workflow.
 2. Plans a short brag concept specific to this project.
 3. Scripts and storyboards the video.
 4. Hands a focused composition brief to Hyperframes.
-5. Validates, renders, and writes share copy.
+5. Validates, renders, and writes share copy plus platform-specific social media posts (Twitter/X, Facebook, TikTok, YouTube Shorts).
 
 ## Parsing the invocation
 
@@ -47,9 +47,14 @@ Parse these options:
 | `--title` | string | inferred from project |
 | `--voice` | flag | narration off |
 
+Format options:
+- `landscape`: 1920x1080 (16:9, desktop / YouTube / web default)
+- `vertical`: 1080x1920 (9:16, mobile-friendly for TikTok, YouTube Shorts, Instagram Reels)
+- `square`: 1080x1080 (1:1, feed posts)
+
 Voice is opt-in. If `--voice` is present, use Kokoro via Hyperframes and do
 not add any provider-selection logic. The voice workflow is intentionally
-single-provider.
+single-provider in this PR.
 
 Tone can be a preset (`default`, `polished`, `yc-parody`, `chaotic`, `deadpan`, `cinematic`, `app-store`) or a creative direction such as "fake Series A launch from 2016", "museum exhibit", or "overproduced mobile game ad".
 
@@ -79,10 +84,6 @@ Use a timestamp when:
 
 Generate the timestamp at the start of the run (`YYYY-MM-DD-HHmmss`) and use it consistently for all output paths in that run: plan, brief, composition, render, and share copy.
 
-## Skill directory
-
-`<skill-dir>` is the directory containing this `SKILL.md`. Claude Code prints it as "Base directory for this skill" when the skill loads; for other agents it's wherever the skill was installed. Bundled assets are under `<skill-dir>/assets/` and scripts under `<skill-dir>/scripts/`. Don't guess an install path: a plugin install, a `~/.claude/skills/` copy, and this repo all put it somewhere different.
-
 ---
 
 ## Step 1: Inspect the project
@@ -101,7 +102,7 @@ Scan the project directory and extract the information needed to plan the brag v
 
 Write `<output-dir>/brag-plan.md` (where `<output-dir>` is `brag-output/` or the timestamped variant chosen above). Answer the planning rubric. Commit to a creative angle. Write the beat-by-beat storyboard including scenes, text, timing, transitions, and SFX cues.
 
-When music is selected, include a compact `Music cue guidance` section: read the bundled track's cue preset from `<skill-dir>/assets/music/cues/` if present, otherwise note cues will be detected at composition time (any track now supports beat sync — see `references/audio.md`). Cue metadata is optional timing guidance only: story, readability, pacing, and product clarity stay primary.
+When music is selected, include a compact `Music cue guidance` section: read the bundled track's cue preset from `assets/music/cues/` if present, otherwise note cues will be detected at composition time (any track now supports beat sync — see `references/audio.md`). Cue metadata is optional timing guidance only: story, readability, pacing, and product clarity stay primary.
 
 **Gate:** `<output-dir>/brag-plan.md` exists with a full storyboard. Scene durations sum to 15–25 seconds.
 
@@ -125,9 +126,9 @@ Write the composition brief and use Hyperframes to create the video implementati
 
 **Read:** [references/step-4-deliver.md](references/step-4-deliver.md)
 
-Validate, preview, render to `<output-dir>/brag.mp4`, pick the best poster frame into `<output-dir>/brag.jpg`, bake that poster as the video's frame 0 so it's the idle thumbnail everywhere, and write `<output-dir>/share-copy.txt`.
-
-**Gate:** `<output-dir>/brag.mp4` exists. A best-frame poster `<output-dir>/brag.jpg` is picked (not an arbitrary frame) and baked as frame 0 of `brag.mp4`. Share copy is written.
+Validate, preview, render to `<output-dir>/brag.mp4`, pick the best poster frame into `<output-dir>/brag.jpg`, bake that poster as the video's frame 0 so it's the idle thumbnail everywhere, write `<output-dir>/share-copy.txt`, and generate tailored social media launch copy in `<output-dir>/social-posts.md` formatted specifically for Twitter/X, Facebook, TikTok, and YouTube Shorts.
+ 
+**Gate:** `<output-dir>/brag.mp4` exists. A best-frame poster `<output-dir>/brag.jpg` is picked (not an arbitrary frame) and baked as frame 0 of `brag.mp4`. Share copy is written. `<output-dir>/social-posts.md` exists with formatted posts for Twitter/X, Facebook, TikTok, and YouTube Shorts.
 
 ---
 

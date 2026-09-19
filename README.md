@@ -63,6 +63,12 @@ Or steer the tone:
 /brag --tone "fake Series A launch from 2016"
 ```
 
+Or render for mobile (TikTok, Reels, Shorts):
+
+```text
+/brag --format vertical
+```
+
 Voiceover is off by default. Enable it explicitly with:
 
 ```text
@@ -71,7 +77,7 @@ Voiceover is off by default. Enable it explicitly with:
 
 Narration uses Kokoro through Hyperframes when enabled.
 
-You get a `brag-output/` folder with the plan, a composition brief, share copy, and the rendered `brag.mp4`.
+You get a `brag-output/` folder with the plan, a composition brief, share copy, tailored multi-platform launch copy (`social-posts.md` for Twitter/X, Facebook, TikTok, and YouTube Shorts), and the rendered `brag.mp4` (with frame 0 baked poster thumbnail).
 
 ## How it works
 

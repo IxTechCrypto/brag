@@ -3,7 +3,7 @@
 ## Validate
 
 ```bash
-cd <output-dir>/composition
+cd brag-output/composition
 npx hyperframes check   # brag's single pre-render gate — fix every error it reports
 ```
 
@@ -31,7 +31,7 @@ If the user approves or asks to render:
 npx hyperframes render --output ../brag.mp4
 ```
 
-This outputs to `<output-dir>/brag.mp4` (one level up from the composition directory).
+This outputs to `brag-output/brag.mp4` (one level up from the composition directory).
 
 For a faster iteration render:
 ```bash
@@ -47,7 +47,7 @@ npx hyperframes render --quality high --output ../brag.mp4
 
 The poster is the still shown before the video plays — the first thing anyone sees when it's idle or unplayed. Don't leave it to the raw first frame or an arbitrary timestamp; those land on fades, mid-transitions, blank intro backgrounds, or half-rendered text.
 
-You built this composition, so you already know its strongest moment and exactly when it lands — the hook line, the hero reveal, or the final logo. Pick that beat at a **settled** point: text fully animated in, before it exits (the storyboard timings tell you the safe window). Then extract that one frame full-res with ffmpeg. From `<output-dir>/composition`:
+You built this composition, so you already know its strongest moment and exactly when it lands — the hook line, the hero reveal, or the final logo. Pick that beat at a **settled** point: text fully animated in, before it exits (the storyboard timings tell you the safe window). Then extract that one frame full-res with ffmpeg. From `brag-output/composition`:
 
 ```bash
 # use the timestamp of your strongest settled beat, e.g. 3.2s
@@ -60,7 +60,7 @@ Aim for a frame that's postable on its own (the "show the thing" law — any fro
 
 A bare `.mp4` has no `poster` attribute — every player and platform picks its own idle thumbnail, and almost all of them grab **frame 0**. Slack, Twitter/X, and Discord regenerate thumbnails server-side and ignore embedded cover-art metadata, so the *only* reliable way to control the idle image everywhere is to make frame 0 *be* the poster.
 
-Replace **only** the first frame's pixels with `brag.jpg`, leaving every other frame and all timing untouched — same duration, same frame count, audio copied through. At 30fps the poster shows for 1/30s before the intro rolls, so it's imperceptible on playback but it's what every thumbnail grabber sees. From `<output-dir>`:
+Replace **only** the first frame's pixels with `brag.jpg`, leaving every other frame and all timing untouched — same duration, same frame count, audio copied through. At 30fps the poster shows for 1/30s before the intro rolls, so it's imperceptible on playback but it's what every thumbnail grabber sees. From `brag-output`:
 
 ```bash
 ffmpeg -y -i brag.mp4 -i brag.jpg \
@@ -74,7 +74,7 @@ The poster (`brag.jpg`) matches the video's dimensions because it was pulled fro
 
 ## Write share copy
 
-Write `<output-dir>/share-copy.txt`.
+Write `brag-output/share-copy.txt`.
 
 The share copy should be:
 - One to three sentences max
@@ -87,7 +87,7 @@ The share copy should be:
 If variants are useful, write them to a separate optional file:
 
 ```text
-<output-dir>/share-copy-variants.md
+brag-output/share-copy-variants.md
 ```
 
 ### Share copy by tone
@@ -143,17 +143,49 @@ Taxi for Taxis: the ride-hailing app for ride-hailing assets.
 Available in 12 metros.
 ```
 
+## Multi-Platform Social Media Posts
+
+Write `<output-dir>/social-posts.md`.
+
+This file must contain ready-to-publish copy specifically formatted for each of the four core platforms:
+
+### 1. Twitter / X
+* **Structure:** High-velocity hook line + 2-3 bullet highlights + clear call to action / repo link.
+* **Length:** Under 280 characters for the main post, or a 2-tweet launch thread (Tweet 1: Hook + video, Tweet 2: Tech stack & link).
+* **Tags:** 2-3 focused hashtags (e.g. `#buildinpublic`, `#bitcoin`, `#rustlang`).
+
+### 2. Facebook
+* **Structure:** Narrative-driven community post (2-3 paragraphs).
+* **Story:** Explain *why* you built it, the problem with existing tools/hardware, and how this changes things.
+* **Tone:** Accessible, conversational, and explanatory.
+* **Engagement:** Ends with an open question for comments (e.g. "What do you think about running open-source firmware on your ASICs?").
+
+### 3. TikTok
+* **Hook Line:** First line must grab attention in under 3 seconds before "...more" cuts it off.
+* **Body:** High-energy, punchy, conversational, search-keyword optimized for the algorithm.
+* **Hashtags:** 4-6 relevant tags (e.g. `#techtok #coding #tech #crypto #rustlang`).
+* **Audio & Comment:** Includes sound suggestion and a suggested pinned comment to drive clicks to bio/repo.
+
+### 4. YouTube Shorts
+* **Title:** High-CTR title under 60 characters, ending with `#shorts`.
+* **Description:** 2-3 sentence overview + key highlights + project link and social handles.
+* **Search Tags:** Comma-separated list of recommended tags for the YouTube upload metadata.
+* **Pinned Comment:** Pre-written comment prompt for community discussion and quick links.
+
+---
+
 ## Final output structure
 
-After this step, `<output-dir>/` should contain:
+After this step, `brag-output/` should contain:
 
 ```
-<output-dir>/
-  brag.mp4                — the rendered video
+brag-output/
+  brag.mp4                — the rendered video (frame 0 baked)
   brag.jpg                — the poster (best frame, for <video poster>)
   brag-plan.md            — the plan and storyboard
   composition-brief.md    — the Hyperframes handoff brief
-  share-copy.txt          — the share caption
+  share-copy.txt          — the quick canonical share caption
+  social-posts.md         — formatted posts for Twitter/X, Facebook, TikTok, YouTube Shorts
   composition/            — the Hyperframes project
     index.html
     ...
@@ -162,7 +194,7 @@ After this step, `<output-dir>/` should contain:
 ## Telling the user
 
 After everything is done, tell the user:
-- Where the video is (`<output-dir>/brag.mp4`)
-- Where the share copy is
+- Where the video is (`brag-output/brag.mp4`)
+- Where the poster and social posts are (`social-posts.md`)
 - One sentence on what the video does creatively
-- Optionally: offer to re-roll a scene, change tone, or try a different angle
+- The tailored posts ready for copy-pasting to Twitter, Facebook, TikTok, and YouTube Shorts
